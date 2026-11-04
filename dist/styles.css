@@ -12,3 +12,5 @@
 
 /* Paleta alinhada ao verde dos olhos da marca. */
 body{color:var(--deep)}h1,h2,.logo{color:var(--ink)}h1 em:after{background:var(--deep)}.topbar,.dark,.filters button.active{color:#102b08}.dark:hover{background:#71b541}.final-cta{color:#102b08}.final-cta h2,.final-cta h2 em,.final-cta h2>span{color:#102b08}.final-cta .lime{background:var(--paper);color:var(--deep)}.outline,.text-link,.product-link,.filters button,.dialog-close{color:var(--deep)}dialog{color:var(--deep)}.experience{background:#ecf3e5}.visit{background:#eaf2e2}.values h3{color:var(--deep)}
+
+@media(max-width:800px){.header nav{top:79px}}
