@@ -1,5 +1,16 @@
 import { createRoot } from 'react-dom/client';
 import { LiquidButton } from '@/components/ui/liquid-glass-button';
+import { AnimatedNavFramer } from '@/components/ui/navigation-menu';
+
+const oldNav = document.querySelector('#navigation');
+if (oldNav) {
+  const mount = document.createElement('div');
+  mount.className = 'animated-nav-mount';
+  oldNav.replaceWith(mount);
+  document.querySelector('.menu')?.remove();
+  document.documentElement.classList.add('has-animated-nav');
+  createRoot(mount).render(<AnimatedNavFramer />);
+}
 
 const targets = [
   '.header-contact',

@@ -21,3 +21,5 @@ npm run build
 ```
 
 A compilação gera `dist/assets/buttons.js` e `dist/assets/buttons.css`. Para adicionar componentes futuros pelo CLI do shadcn, use `npx shadcn@latest add <componente>` na raiz deste projeto; não é necessário inicializar novamente. Os links originais continuam funcionais mesmo se o módulo React não carregar. O efeito usa camadas de brilho, refração SVG e uma alternativa com desfoque para navegadores sem suporte a filtros SVG no backdrop. O movimento respeita a preferência de movimento reduzido. Nenhum provedor de contexto ou gerenciamento de estado externo é necessário.
+
+A navegação flutuante em `components/ui/navigation-menu.tsx` usa Framer Motion e ícones Lucide. Mantém os destinos `#colecao`, `#experiencia` e `#visite`. Recolhe após rolar para baixo além de 150 px, expande após 80 px de rolagem para cima ou ao tocar no botão de menu, e pode ser recolhida com Escape. Os links recolhidos ficam fora da navegação por teclado. A preferência de movimento reduzido desativa as animações. A integração compartilha os arquivos de entrada e de estilos dos botões, sem exigir um novo provedor React.
