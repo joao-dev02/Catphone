@@ -7,3 +7,5 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
 
 @media(max-width:580px){h1{font-size:clamp(46px,14.35vw,56px);letter-spacing:-3.5px}.spark{width:30px;height:30px;right:-41px;top:10px}}
+
+.logo .brand-symbol{width:52px;height:52px;object-fit:contain;flex-shrink:0}@media(max-width:800px){.logo .brand-symbol{width:45px;height:45px}}

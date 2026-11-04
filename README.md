@@ -6,4 +6,4 @@ Inclui filtros por categoria, consulta em modal, cópia de mensagem para atendim
 
 As fotografias, o endereço, o telefone e os horários foram extraídos de https://catphonethe.my.canva.site/cat-phone em 04/11/2026. O Instagram não permitiu leitura automatizada. Os dados da loja devem ser confirmados pela empresa antes de uma divulgação comercial definitiva. Os produtos são categorias ilustrativas; não representam estoque confirmado.
 
-A tipografia usa Google Fonts, com fontes locais de sistema como alternativa. O símbolo de gato no cabeçalho é uma proposta gráfica vetorial, não uma reprodução do logotipo oficial.
+A tipografia usa Google Fonts, com fontes locais de sistema como alternativa. O símbolo no cabeçalho usa a referência da marca enviada pelo usuário, restaurada com a ferramenta integrada de imagens e fundo transparente. Arquivo: dist/assets/catphone-logo.png. Prompt: extrair o símbolo real, remover o fundo marrom, ampliar e limpar as bordas preservando o desenho e o verde original.
