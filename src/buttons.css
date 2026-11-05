@@ -19,22 +19,19 @@
 }
 
 .glass-button-mount{display:inline-flex;vertical-align:middle}
-.cat-glass{position:relative;isolation:isolate;display:inline-flex;justify-content:space-between;align-items:center;gap:30px;min-height:55px;height:auto;padding:16px 23px;border:1px solid #35601966;border-radius:9px;background:linear-gradient(155deg,#a5d87b55,transparent 46%),#5c9e2e;color:#102b08;font-family:var(--font);font-size:13px;line-height:1.4;font-weight:600;white-space:nowrap;box-shadow:0 3px 8px #23451a15;transition:transform .3s,box-shadow .3s,background .3s}
+.cat-glass{position:relative;isolation:isolate;display:inline-flex;justify-content:space-between;align-items:center;gap:30px;min-height:55px;height:auto;padding:16px 23px;border:0;border-radius:6px;background:transparent;color:var(--deep);font-family:var(--font);font-size:13px;line-height:1.4;font-weight:600;white-space:nowrap;box-shadow:none;transition:transform .3s,color .3s,box-shadow .3s}
 .cat-glass.small{min-height:43px;padding:12px 18px;font-size:12px}
 .cat-glass .glass-content{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;width:100%;gap:30px;font-size:inherit;line-height:inherit;pointer-events:none}
 .cat-glass .glass-label{font-size:inherit;line-height:inherit}
 .cat-glass .glass-arrow{font-size:21px;line-height:1}
-.cat-glass .glass-edge{position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:inherit;box-shadow:0 0 6px #00000008,0 2px 6px #00000014,inset 2px 2px 1px -1px #ffffffa6,inset -2px -2px 1px -1px #23451a80,inset 0 0 5px 2px #ffffff1c;transition:box-shadow .3s}
-.cat-glass .glass-distortion{position:absolute;inset:0;z-index:-1;border-radius:inherit;overflow:hidden;pointer-events:none;background:#ffffff08;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
-.cat-glass .glass-distortion::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,#fff4,transparent 45%,#ffffff0d);opacity:.5;transition:opacity .3s}
-@supports (backdrop-filter:url('#glass')){.cat-glass .glass-distortion{backdrop-filter:var(--glass-filter) blur(2px)}}
-.cat-glass-outline{background:linear-gradient(145deg,#ffffffa6,#f7f7ef55);color:var(--deep)}
-.cat-glass-light{background:linear-gradient(145deg,#fff,#f7f7efe6);color:var(--deep);border-color:#ffffffb3}
+.cat-glass .glass-edge{position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:999px;box-shadow:0 0 6px rgba(0,0,0,.03),0 2px 6px rgba(0,0,0,.08),inset 3px 3px .5px -3px rgba(0,0,0,.9),inset -3px -3px .5px -3px rgba(0,0,0,.85),inset 1px 1px 1px -.5px rgba(0,0,0,.6),inset -1px -1px 1px -.5px rgba(0,0,0,.6),inset 0 0 6px 6px rgba(0,0,0,.12),inset 0 0 2px 2px rgba(0,0,0,.06),0 0 12px rgba(255,255,255,.15);transition:box-shadow .3s}
+.cat-glass .glass-distortion{position:absolute;inset:0;isolation:isolate;z-index:-1;border-radius:inherit;overflow:hidden;pointer-events:none;background:transparent;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+@supports (backdrop-filter:url('#glass')){.cat-glass .glass-distortion{backdrop-filter:var(--glass-filter)}}
 .cat-glass:focus-visible{outline:3px solid var(--deep);outline-offset:4px;box-shadow:0 0 0 7px #a4df7066}
 .cat-glass:active{transform:translateY(1px) scale(.98)}
-@media(hover:hover) and (pointer:fine){.cat-glass:hover{transform:translateY(-2px) scale(1.035);background-color:#6daa40;box-shadow:0 6px 18px #23451a26}.cat-glass-outline:hover,.cat-glass-light:hover{background-color:var(--paper)}.cat-glass:hover .glass-distortion::after{opacity:.9}}
+@media(hover:hover) and (pointer:fine){.cat-glass:hover{transform:scale(1.05);background:transparent}}
 .final-cta .glass-button-mount{position:absolute;right:0;bottom:7px}
-.final-cta .cat-glass{position:relative;right:auto;bottom:auto;margin:0}
+.final-cta .cat-glass{position:relative;right:auto;bottom:auto;margin:0;background:transparent;color:#102b08}
 @media(max-width:1100px){.hero-actions .cat-glass .glass-content{gap:15px}}
 @media(max-width:800px){.header-glass-mount{margin-left:auto}.header-glass-mount .header-contact{margin-left:0}.final-cta .glass-button-mount{position:static;margin-top:30px}.hero-actions .cat-glass{font-size:11px;padding:14px}.hero-actions .cat-glass .glass-content{gap:15px}}
 @media(max-width:580px){.header-glass-mount{display:none}.hero-actions .cat-glass{font-size:12px;padding:16px 19px}.visit-actions .cat-glass{padding:15px 18px}.steps .glass-button-mount{margin-top:24px}.steps .glass-button-mount .cat-glass{margin-top:0}}

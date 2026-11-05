@@ -27,14 +27,12 @@ for (const selector of targets) {
   const href = link.getAttribute('href') ?? '#';
   const target = link.getAttribute('target') ?? undefined;
   const rel = link.getAttribute('rel') ?? undefined;
-  const isLight = link.classList.contains('lime');
-  const isOutline = link.classList.contains('outline');
-  const className = link.className;
+  const className = link.className.split(/\s+/).filter(name => !['dark', 'lime', 'outline'].includes(name)).join(' ');
   const mount = document.createElement('span');
   mount.className = `glass-button-mount${selector === '.header-contact' ? ' header-glass-mount' : ''}`;
   link.replaceWith(mount);
   createRoot(mount).render(
-    <LiquidButton asChild className={`${className} cat-glass ${isLight ? 'cat-glass-light' : isOutline ? 'cat-glass-outline' : 'cat-glass-green'}`}>
+    <LiquidButton asChild className={`${className} cat-glass`}>
       <a href={href} target={target} rel={rel}>
         <span className="glass-label">{label}</span>
         <span className="glass-arrow" aria-hidden="true">↗</span>
