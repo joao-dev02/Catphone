@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { LiquidButton } from '@/components/ui/liquid-glass-button';
 import { AnimatedNavFramer } from '@/components/ui/navigation-menu';
+import { ArrowUpRight } from 'lucide-react';
 
 const oldNav = document.querySelector('#navigation');
 if (oldNav) {
@@ -35,7 +36,7 @@ for (const selector of targets) {
     <LiquidButton asChild className={`${className} cat-glass`}>
       <a href={href} target={target} rel={rel}>
         <span className="glass-label">{label}</span>
-        <span className="glass-arrow" aria-hidden="true">↗</span>
+        <ArrowUpRight className="glass-arrow" aria-hidden="true" size={20} strokeWidth={1.8} />
       </a>
     </LiquidButton>
   );

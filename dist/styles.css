@@ -16,3 +16,5 @@ body{color:var(--deep)}h1,h2,.logo{color:var(--ink)}h1 em:after{background:var(-
 @media(max-width:800px){.header nav{top:79px}}
 
 .marquee .marquee-icon{width:27px;height:27px;object-fit:contain;flex-shrink:0}.marquee .cat-icon{width:32px;height:32px;filter:brightness(.42)}@media(max-width:580px){.marquee .marquee-icon{width:23px;height:23px}.marquee .cat-icon{width:28px;height:28px}}
+
+.arrow-icon{display:inline-block;width:1em;height:1em;vertical-align:-.12em;flex-shrink:0;overflow:visible}.round .arrow-icon{width:21px;height:21px}.button>span:has(.arrow-icon),.text-link>span:has(.arrow-icon),.product-link>span:has(.arrow-icon){display:inline-flex;align-items:center}
