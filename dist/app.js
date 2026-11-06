@@ -14,12 +14,9 @@ document.querySelectorAll('[data-filter]').forEach(button => button.addEventList
     item.classList.toggle('active', item === button);
     item.setAttribute('aria-pressed', String(item === button));
   });
-  let count = 0;
   document.querySelectorAll('.product').forEach(product => {
     product.hidden = button.dataset.filter !== 'all' && product.dataset.category !== button.dataset.filter;
-    if (!product.hidden) count++;
   });
-  document.querySelector('.filter-count').textContent = count === 3 ? '3 possibilidades. Seu próximo upgrade.' : 'Converse com a equipe para conhecer as opções.';
 }));
 const dialog = document.querySelector('#consult-dialog');
 document.querySelectorAll('[data-consult]').forEach(button => button.addEventListener('click', () => {

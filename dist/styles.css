@@ -26,3 +26,8 @@ body{color:var(--deep)}h1,h2,.logo{color:var(--ink)}h1 em:after{background:var(-
 @keyframes marquee-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(max-width:580px){.marquee-group{gap:26px;padding-right:26px}}
 @media(prefers-reduced-motion:reduce){.marquee>.marquee-track{animation:none;will-change:auto}}
+
+/* Torn paper edges reveal the brand green beneath the hero. */
+.cat-scratches{position:absolute;right:-105px;top:8px;width:82px;height:110px;overflow:visible;pointer-events:none;transform:rotate(8deg);filter:drop-shadow(1px 2px 1px #18351026)}
+@media(max-width:800px){.cat-scratches{right:-76px;width:60px;height:84px;top:4px}}
+@media(max-width:380px){.cat-scratches{right:-53px;width:43px;height:65px}}
