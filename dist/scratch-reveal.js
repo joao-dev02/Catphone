@@ -21,6 +21,11 @@
   panel.append(overlay);
   const svg = overlay.querySelector('svg');
   const holes = overlay.querySelector('.tear-holes');
+  // Phones use a bounded raster layer: no live SVG masks or full-section filters.
+  if (matchMedia('(max-width: 800px)').matches) {
+    setupMobileReveal([...holes.querySelectorAll('path')].map(path => path.getAttribute('d')));
+    return;
+  }
   const rects = overlay.querySelectorAll('.tear-mask-base, .tear-paper-sheet');
   const ns = 'http://www.w3.org/2000/svg';
   const defs = svg.querySelector('defs');
@@ -113,4 +118,102 @@
   motion.addEventListener('change', layout);
   new ResizeObserver(layout).observe(section);
   layout();
+
+  function setupMobileReveal(pathData) {
+    const canvas = document.createElement('canvas');
+    canvas.setAttribute('aria-hidden', 'true');
+    overlay.replaceChildren(canvas);
+    overlay.classList.add('scratch-paper-mobile');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) { overlay.remove(); return; }
+    const paths = pathData.map(d => new Path2D(d));
+    let w = 0, h = 0, origin = 0, travel = 0, raf = 0;
+    let lastCut = -1, lastProgress = -1, bypass = false, active = false;
+    const clamp = n => Math.max(0, Math.min(1, n));
+    const paper = getComputedStyle(section).getPropertyValue('--paper').trim() || '#f7f7ef';
+    const ratio = Math.min(devicePixelRatio || 1, 1.25);
+    function paint(step) {
+      lastCut = step;
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = paper;
+      ctx.fillRect(0, 0, w, h);
+      ctx.save();
+      ctx.translate(w * .5 + 16 * .8, h * .22);
+      ctx.scale(.8, .8);
+      ctx.globalCompositeOperation = 'destination-out';
+      paths.forEach((path, index) => {
+        const amount = clamp(step / 16 - index * .025);
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(-160, -180, 320, 340 * amount);
+        ctx.clip();
+        ctx.fill(path);
+        ctx.restore();
+      });
+      ctx.restore();
+    }
+    function update() {
+      raf = 0;
+      if (!active || bypass || motion.matches) return;
+      // Geometry is cached during layout; scrolling only reads scrollY.
+      const p = clamp((scrollY - origin + h * .85) / (h * .85 + travel));
+      if (p === lastProgress) return;
+      lastProgress = p;
+      const step = Math.min(17, Math.ceil(clamp(p / .24) * 17));
+      if (step !== lastCut) paint(step);
+      const zoom = clamp((p - .2) / .66);
+      canvas.style.transform = `scale(${Math.exp(zoom * Math.log(32))})`;
+      // Finish with a short dissolve rather than allocating a huge zoomed mask.
+      overlay.style.opacity = String(1 - clamp((p - .76) / .18));
+      overlay.hidden = p >= .94;
+      canvas.style.willChange = p > 0 && p < .94 ? 'transform' : 'auto';
+    }
+    function schedule() {
+      if (active && !bypass && !motion.matches && !raf) raf = requestAnimationFrame(update);
+    }
+    function layout(force = false) {
+      const widthChanged = w !== panel.clientWidth;
+      // Mobile browser chrome changes height during scroll; don't reallocate then.
+      if (!force && !widthChanged) return;
+      w = panel.clientWidth;
+      h = document.documentElement.clientHeight;
+      travel = Math.round(h * .2);
+      scene.classList.toggle('has-scratch-reveal', !motion.matches && !bypass);
+      scene.style.height = motion.matches || bypass ? '' : `${panel.offsetHeight + travel}px`;
+      origin = scene.getBoundingClientRect().top + scrollY;
+      canvas.width = Math.ceil(w * ratio);
+      canvas.height = Math.ceil(h * ratio);
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+      canvas.style.transformOrigin = `${w * .5}px ${h * .22}px`;
+      overlay.style.height = `${h}px`;
+      lastCut = lastProgress = -1;
+      paint(0);
+      overlay.hidden = motion.matches || bypass;
+      update();
+    }
+    function skip(event) {
+      if (event?.type === 'focusin' && scrollY >= origin + travel) return;
+      bypass = true;
+      layout(true);
+    }
+    const observer = new IntersectionObserver(entries => {
+      active = entries[0].isIntersecting;
+      if (active) schedule();
+      else canvas.style.willChange = 'auto';
+    }, {rootMargin:'100px 0px'});
+    observer.observe(scene);
+    section.addEventListener('focusin', skip);
+    document.querySelectorAll('a[href="#colecao"]').forEach(a => a.addEventListener('click', skip));
+    addEventListener('hashchange', () => {
+      if (location.hash === '#colecao') { skip(); section.scrollIntoView({behavior:'instant'}); }
+    });
+    addEventListener('scroll', schedule, {passive:true});
+    addEventListener('resize', () => layout());
+    new ResizeObserver(() => layout(true)).observe(section);
+    motion.addEventListener('change', () => layout(true));
+    if (location.hash === '#colecao') bypass = true;
+    layout(true);
+  }
 })();
