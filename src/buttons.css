@@ -19,7 +19,7 @@
 }
 
 .glass-button-mount{display:inline-flex;vertical-align:middle}
-.cat-glass{position:relative;isolation:isolate;display:inline-flex;justify-content:space-between;align-items:center;gap:30px;min-height:55px;height:auto;padding:16px 23px;border:0;border-radius:6px;background:transparent;color:var(--deep);font-family:var(--font);font-size:13px;line-height:1.4;font-weight:600;white-space:nowrap;box-shadow:none;transition:transform .3s,color .3s,box-shadow .3s}
+.cat-glass{position:relative;isolation:isolate;display:inline-flex;justify-content:space-between;align-items:center;gap:30px;min-height:55px;height:auto;padding:16px 23px;border:0;border-radius:6px;background:transparent;color:var(--deep);font-family:var(--font);font-size:13px;line-height:1.4;font-weight:500;white-space:nowrap;box-shadow:none;transition:transform .3s,color .3s,box-shadow .3s}
 .cat-glass.small{min-height:43px;padding:12px 18px;font-size:12px}
 .cat-glass .glass-content{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;width:100%;gap:30px;font-size:inherit;line-height:inherit;pointer-events:none}
 .cat-glass .glass-label{font-size:inherit;line-height:inherit}
