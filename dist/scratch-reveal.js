@@ -131,19 +131,31 @@
     let lastCut = -1, lastProgress = -1, bypass = false, active = false;
     const clamp = n => Math.max(0, Math.min(1, n));
     const paper = getComputedStyle(section).getPropertyValue('--paper').trim() || '#f7f7ef';
-    const ratio = Math.min(devicePixelRatio || 1, 1.25);
+    // Coarse paper edges tolerate a lower-resolution texture on small screens.
+    const lowPower = (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+      (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
+    const ratio = Math.min(devicePixelRatio || 1, lowPower ? .75 : 1);
+    const maxZoom = lowPower ? 10 : 16;
+    const cutSteps = lowPower ? 10 : 16;
+    let painted = false, lastZoom = -1, lastOpacity = -1;
     function paint(step) {
       lastCut = step;
       ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
       ctx.globalCompositeOperation = 'source-over';
       ctx.fillStyle = paper;
-      ctx.fillRect(0, 0, w, h);
+      if (!painted) {
+        ctx.fillRect(0, 0, w, h);
+        painted = true;
+      } else {
+        // Only repaint the small area containing cuts, not the whole screen.
+        ctx.fillRect(w * .5 - 120, h * .22 - 150, 240, 290);
+      }
       ctx.save();
       ctx.translate(w * .5 + 16 * .8, h * .22);
       ctx.scale(.8, .8);
       ctx.globalCompositeOperation = 'destination-out';
       paths.forEach((path, index) => {
-        const amount = clamp(step / 16 - index * .025);
+        const amount = clamp(step / cutSteps * 1.06 - index * .025);
         ctx.save();
         ctx.beginPath();
         ctx.rect(-160, -180, 320, 340 * amount);
@@ -160,12 +172,19 @@
       const p = clamp((scrollY - origin + h * .85) / (h * .85 + travel));
       if (p === lastProgress) return;
       lastProgress = p;
-      const step = Math.min(17, Math.ceil(clamp(p / .24) * 17));
+      const step = Math.min(cutSteps, Math.ceil(clamp(p / .24) * cutSteps));
       if (step !== lastCut) paint(step);
       const zoom = clamp((p - .2) / .66);
-      canvas.style.transform = `scale(${Math.exp(zoom * Math.log(32))})`;
-      // Finish with a short dissolve rather than allocating a huge zoomed mask.
-      overlay.style.opacity = String(1 - clamp((p - .76) / .18));
+      if (zoom !== lastZoom) {
+        canvas.style.transform = `scale(${Math.exp(zoom * Math.log(maxZoom))})`;
+        lastZoom = zoom;
+      }
+      // Avoid extreme enlargement: dissolve once the camera enters the tear.
+      const opacity = 1 - clamp((p - .6) / .34);
+      if (opacity !== lastOpacity) {
+        overlay.style.opacity = String(opacity);
+        lastOpacity = opacity;
+      }
       overlay.hidden = p >= .94;
       canvas.style.willChange = p > 0 && p < .94 ? 'transform' : 'auto';
     }
@@ -188,7 +207,8 @@
       canvas.style.height = `${h}px`;
       canvas.style.transformOrigin = `${w * .5}px ${h * .22}px`;
       overlay.style.height = `${h}px`;
-      lastCut = lastProgress = -1;
+      painted = false;
+      lastCut = lastProgress = lastZoom = lastOpacity = -1;
       paint(0);
       overlay.hidden = motion.matches || bypass;
       update();
