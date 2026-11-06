@@ -84,4 +84,4 @@ body{color:var(--deep)}h1,h2,.logo{color:var(--ink)}h1 em:after{background:var(-
 .iphone-frame::after{content:'';position:absolute;right:-5px;top:133px;width:3px;height:60px;border-radius:3px;background:#8b8e81}
 @media(max-width:580px){.store-photo.about-phone-stage{padding:18px 12px}.iphone-frame{width:min(100%,270px);border-radius:41px}.iphone-screen{border-radius:32px}}
 
-.experience-copy>.store-commitment{margin:28px 0;padding-top:24px;border-top:1px solid var(--line);color:var(--deep);font-size:clamp(16px,1.5vw,20px);font-weight:600;line-height:1.6}
+.experience-copy>.store-commitment{margin:28px 0;padding-top:24px;border-top:1px solid var(--line);color:var(--deep);font-size:clamp(16px,1.5vw,20px);font-weight:400;line-height:1.6}
