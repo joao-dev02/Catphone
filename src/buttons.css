@@ -59,3 +59,13 @@
 @media(max-width:580px){.animated-nav-shell{top:86px;right:20px;max-width:calc(100vw - 40px)}.animated-nav-links{gap:0;padding-right:43px}.animated-nav-brand{padding-left:9px;padding-right:3px}.animated-nav-brand img{width:24px;height:24px}.header nav.animated-nav .animated-nav-links a{font-size:10px;padding:9px 8px}.has-animated-nav .hero{padding-top:65px}}
 @media(prefers-reduced-motion:reduce){.animated-nav-links a,.animated-nav-brand,.animated-nav-links,.animated-nav::before,.animated-nav-toggle::before{transition:none}}
 @media(max-width:360px){.header nav.animated-nav .animated-nav-links a{font-size:9px;padding:9px 5px}.animated-nav-brand img{width:22px;height:22px}.animated-nav-links{padding-right:40px}}
+
+/* On phones, keep the compact trigger beside the logo and centre the open menu. */
+@media(max-width:580px){
+  .animated-nav-shell{left:20px;right:20px;top:94px;max-width:none;transform:none}
+  .header nav.animated-nav{width:100%;justify-content:center}
+  .animated-nav-shell.is-collapsed{left:auto;right:20px;top:19px;width:46px}
+  .header nav.animated-nav.is-collapsed{width:46px}
+  .animated-nav.is-collapsed .animated-nav-brand,.animated-nav.is-collapsed .animated-nav-links{visibility:hidden}
+  .animated-nav.is-collapsed .animated-nav-toggle{left:0;right:auto;transform:none}
+}

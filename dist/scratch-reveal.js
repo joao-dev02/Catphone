@@ -54,22 +54,22 @@
     }
     const top = scene.getBoundingClientRect().top;
     // Begin while the first screen leaves, instead of waiting for a blank screen.
-    const lead = innerHeight * .55;
+    const lead = innerHeight * .85;
     const p = clamp((lead - top) / (lead + distance));
     cuts.forEach((cut, index) => {
-      const drawn = clamp((p - index * .025) / .34);
+      const drawn = clamp((p * 1.12 - index * .012) / .24);
       const starts = [-146, -174, -126], ends = [113, 144, 123];
       const y = starts[index] + (ends[index] - starts[index]) * drawn;
       const x = [-27, 40, 103][index] - drawn * [80, 100, 85][index];
       cut.setAttribute('points', drawn === 0 ? '0,-180 0,-180 0,-180' :
         `-160,-180 160,-180 160,${y - 22} ${x + 16},${y - 22} ${x},${y} ${x - 16},${y - 22} -160,${y - 22}`);
     });
-    const zoomProgress = clamp((p - .36) / .61);
+    const zoomProgress = clamp((p - .2) / .66);
     const zoom = Math.exp(zoomProgress * Math.log(180));
     const size = Math.max(.8, Math.min(1.25, width / 1100));
     const sx = size * zoom;
     const sy = size * zoom;
-    const anchorY = Math.min(innerHeight, height) * .34;
+    const anchorY = Math.min(innerHeight, height) * .22;
     const transform = `translate(${width * .5 + 16 * sx} ${anchorY}) scale(${sx} ${sy})`;
     holes.setAttribute('transform', transform);
     edges.setAttribute('transform', transform);
@@ -80,7 +80,7 @@
     scene.classList.toggle('is-scratching', p < 1);
   }
   function layout() {
-    distance = Math.round(innerHeight * .4);
+    distance = Math.round(innerHeight * .2);
     scene.classList.toggle('has-scratch-reveal', !motion.matches && !bypass);
     scene.style.height = motion.matches || bypass ? '' : `${panel.offsetHeight + distance}px`;
     width = panel.clientWidth;

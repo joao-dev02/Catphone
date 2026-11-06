@@ -50,4 +50,16 @@ body{color:var(--deep)}h1,h2,.logo{color:var(--ink)}h1 em:after{background:var(-
 .scratch-scene button:focus-visible{outline-color:#fff}
 @media(prefers-reduced-motion:reduce){.scratch-scene.has-scratch-reveal{padding-bottom:0}.has-scratch-reveal>.scratch-panel{position:relative}.scratch-paper{display:none}}
 
-@media(max-width:580px){.cat-scratches{right:0;top:-72px;width:55px;height:74px}}
+@media(max-width:580px){
+  .hero h1{width:auto;max-width:100%}
+  .cat-scratches{position:absolute;display:block;right:0;top:1.05em;width:clamp(38px,12vw,52px);height:1.25em;margin:0;transform:rotate(-8deg) scaleX(-1)}
+}
+
+/* Match the store visit panel to the product collection. */
+.visit{background:#437d28;color:#fff}
+.visit h2,.visit .eyebrow,.visit .address,.visit .hours{color:#fff}
+.visit-copy>p,.visit .address p{color:#ffffffd9}
+.visit .hours{border-color:#ffffff50}
+.visit .text-link{color:#fff;border-color:#ffffff80}
+.visit .cat-glass,.visit .dark{background:var(--paper);color:var(--deep)}
+.visit a:focus-visible{outline-color:#fff}

@@ -12,12 +12,12 @@ const navItems = [
 const EXPAND_SCROLL_THRESHOLD = 80;
 
 export function AnimatedNavFramer() {
-  const [isExpanded, setExpanded] = React.useState(true);
+  const [isExpanded, setExpanded] = React.useState(() => typeof window === "undefined" || !window.matchMedia("(max-width: 580px)").matches);
   const [activeSection, setActiveSection] = React.useState("");
   const navRef = React.useRef<HTMLElement>(null);
   const triggerRef = React.useRef<HTMLButtonElement>(null);
   const linksRef = React.useRef<HTMLDivElement>(null);
-  const expandedRef = React.useRef(true);
+  const expandedRef = React.useRef(isExpanded);
   const linksId = React.useId();
 
   const setOpen = React.useCallback((open: boolean) => {
@@ -35,7 +35,11 @@ export function AnimatedNavFramer() {
       const latest = window.scrollY;
       const delta = latest - lastScrollY;
       lastScrollY = latest;
-      if (latest < 60) { upwardTravel = 0; setOpen(true); return; }
+      if (latest < 60) {
+        upwardTravel = 0;
+        if (!window.matchMedia("(max-width: 580px)").matches) setOpen(true);
+        return;
+      }
       if (delta > 0) {
         upwardTravel = 0;
         if (latest > 150 && !navRef.current?.contains(document.activeElement)) setOpen(false);
