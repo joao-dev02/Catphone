@@ -52,15 +52,22 @@
     // Small screens retain their normal flow and fully readable content.
     scene.classList.toggle('is-revealing', pinned && progress < 1);
     content.style.setProperty('--cat-reveal', `${(1 - progress) * 100}%`);
-    const w = section.clientWidth - 26, h = section.offsetHeight - 30;
+    // Follow the visible part of the collection, not edges outside the viewport.
+    // The section is taller than many laptop and phone screens.
+    const inset = innerWidth <= 800 ? 30 : 50;
+    const left = Math.max(inset, bounds.left + 20);
+    const right = Math.min(innerWidth - inset, bounds.right - 20);
+    const top = Math.max(72, bounds.top + 28);
+    const bottom = Math.min(innerHeight - 48, bounds.bottom - 28);
+    const w = Math.max(0, right - left), h = Math.max(0, bottom - top);
     const distance = progress * 2 * (w + h);
     let x, y, angle;
     if (distance <= w) { x = distance; y = 0; angle = 0; }
     else if (distance <= w + h) { x = w; y = distance - w; angle = 90; }
     else if (distance <= 2 * w + h) { x = 2 * w + h - distance; y = h; angle = 180; }
     else { x = 0; y = 2 * (w + h) - distance; angle = 270; }
-    cat.style.transform = `translate(${x + 13}px, ${y + 15}px) translate(-50%, -50%) rotate(${angle}deg)`;
-    cat.style.opacity = `${Math.min(clamp(progress / .04), clamp((1 - progress) / .06))}`;
+    cat.style.transform = `translate(${left + x}px, ${top + y}px) translate(-50%, -50%) rotate(${angle}deg)`;
+    cat.style.opacity = bottom > top && progress > 0 && progress < 1 ? '1' : '0';
     if (progress !== lastProgress) {
       cat.classList.add('is-walking');
       clearTimeout(stopTimer);

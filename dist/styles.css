@@ -37,11 +37,11 @@ body{color:var(--deep)}h1,h2,.logo{color:var(--ink)}h1 em:after{background:var(-
 .cat-scroll-scene>.collection{position:relative}
 .cat-scroll-scene.is-pinned>.collection{position:sticky;top:20px}
 .cat-scroll-scene.is-revealing .cat-scroll-content{clip-path:inset(0 0 var(--cat-reveal,0%) 0)}
-.scroll-cat{position:absolute;left:0;top:0;width:78px;height:55px;color:var(--deep);pointer-events:none;opacity:0;z-index:3;filter:drop-shadow(0 3px 2px #23451a22)}
+.scroll-cat{position:fixed;left:0;top:0;width:104px;height:73px;color:var(--deep);pointer-events:none;opacity:0;z-index:20;filter:drop-shadow(0 2px 1px var(--paper)) drop-shadow(0 4px 4px #23451a33)}
 .scroll-cat svg{display:block;width:100%;height:100%;overflow:visible}
 .scroll-cat .cat-legs-front,.scroll-cat .cat-legs-back{transform-box:fill-box;transform-origin:50% 0;animation:cat-step .36s ease-in-out infinite alternate;animation-play-state:paused}
 .scroll-cat .cat-legs-back{animation-delay:-.36s}
 .scroll-cat.is-walking .cat-legs-front,.scroll-cat.is-walking .cat-legs-back{animation-play-state:running}
 @keyframes cat-step{from{transform:rotate(-13deg)}to{transform:rotate(13deg)}}
-@media(max-width:800px){.scroll-cat{width:56px;height:40px}}
+@media(max-width:800px){.scroll-cat{width:74px;height:52px}}
 @media(prefers-reduced-motion:reduce){.scroll-cat{display:none}.cat-scroll-scene .cat-scroll-content{clip-path:none}}
