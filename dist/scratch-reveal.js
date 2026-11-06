@@ -21,7 +21,27 @@
   panel.append(overlay);
   const svg = overlay.querySelector('svg');
   const holes = overlay.querySelector('.tear-holes');
-  const rects = overlay.querySelectorAll('rect');
+  const rects = overlay.querySelectorAll('.tear-mask-base, .tear-paper-sheet');
+  const ns = 'http://www.w3.org/2000/svg';
+  const defs = svg.querySelector('defs');
+  const cuts = [...holes.querySelectorAll('path')].map((path, index) => {
+    const clip = document.createElementNS(ns, 'clipPath');
+    clip.id = `claw-draw-${index}`;
+    clip.setAttribute('clipPathUnits', 'userSpaceOnUse');
+    const window = document.createElementNS(ns, 'polygon');
+    clip.append(window);
+    defs.append(clip);
+    path.setAttribute('clip-path', `url(#${clip.id})`);
+    return window;
+  });
+  // A light paper edge makes each newly cut line read as a tear.
+  const edges = holes.cloneNode(true);
+  edges.classList.remove('tear-holes');
+  edges.setAttribute('fill', 'none');
+  edges.setAttribute('stroke', '#fffef7');
+  edges.setAttribute('stroke-width', '1.6');
+  edges.setAttribute('opacity', '.8');
+  svg.append(edges);
   let distance = 0, width = 0, height = 0, frame = 0;
   let bypass = false;
   const clamp = n => Math.max(0, Math.min(1, n));
@@ -33,21 +53,34 @@
       return;
     }
     const top = scene.getBoundingClientRect().top;
-    const p = clamp(-top / distance);
-    const opening = clamp(p / .32);
-    const zoomProgress = clamp((p - .28) / .68);
+    // Begin while the first screen leaves, instead of waiting for a blank screen.
+    const lead = innerHeight * .55;
+    const p = clamp((lead - top) / (lead + distance));
+    cuts.forEach((cut, index) => {
+      const drawn = clamp((p - index * .025) / .34);
+      const starts = [-146, -174, -126], ends = [113, 144, 123];
+      const y = starts[index] + (ends[index] - starts[index]) * drawn;
+      const x = [-27, 40, 103][index] - drawn * [80, 100, 85][index];
+      cut.setAttribute('points', drawn === 0 ? '0,-180 0,-180 0,-180' :
+        `-160,-180 160,-180 160,${y - 22} ${x + 16},${y - 22} ${x},${y} ${x - 16},${y - 22} -160,${y - 22}`);
+    });
+    const zoomProgress = clamp((p - .36) / .61);
     const zoom = Math.exp(zoomProgress * Math.log(180));
-    const sx = (.025 + opening * .975) * zoom;
-    const sy = (.015 + opening * .985) * zoom;
-    // Zoom into the central slit, keeping the camera centred on the opening.
-    const anchorY = Math.min(innerHeight, height) * .48;
-    holes.setAttribute('transform', `translate(${width * .5 + 16 * sx} ${anchorY}) scale(${sx} ${sy})`);
+    const size = Math.max(.8, Math.min(1.25, width / 1100));
+    const sx = size * zoom;
+    const sy = size * zoom;
+    const anchorY = Math.min(innerHeight, height) * .34;
+    const transform = `translate(${width * .5 + 16 * sx} ${anchorY}) scale(${sx} ${sy})`;
+    holes.setAttribute('transform', transform);
+    edges.setAttribute('transform', transform);
+    // Fade paper fibres before the zoom makes them oversized.
+    edges.setAttribute('opacity', String(.8 * (1 - clamp(zoomProgress * 4))));
     overlay.hidden = p >= .999;
     overlay.style.opacity = String(1 - clamp((p - .94) / .06));
     scene.classList.toggle('is-scratching', p < 1);
   }
   function layout() {
-    distance = Math.round(innerHeight * 1.45);
+    distance = Math.round(innerHeight * .4);
     scene.classList.toggle('has-scratch-reveal', !motion.matches && !bypass);
     scene.style.height = motion.matches || bypass ? '' : `${panel.offsetHeight + distance}px`;
     width = panel.clientWidth;
