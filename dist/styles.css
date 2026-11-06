@@ -32,16 +32,22 @@ body{color:var(--deep)}h1,h2,.logo{color:var(--ink)}h1 em:after{background:var(-
 @media(max-width:800px){.cat-scratches{right:-88px;width:72px;height:101px;top:2px}}
 @media(max-width:380px){.cat-scratches{right:-61px;width:51px;height:77px}}
 
-/* A cat traces the collection while scroll reveals the page beneath it. */
-.cat-scroll-scene{position:relative}
-.cat-scroll-scene>.collection{position:relative}
-.cat-scroll-scene.is-pinned>.collection{position:sticky;top:20px}
-.cat-scroll-scene.is-revealing .cat-scroll-content{clip-path:inset(0 0 var(--cat-reveal,0%) 0)}
-.scroll-cat{position:fixed;left:0;top:0;width:104px;height:73px;color:var(--deep);pointer-events:none;opacity:0;z-index:20;filter:drop-shadow(0 2px 1px var(--paper)) drop-shadow(0 4px 4px #23451a33)}
-.scroll-cat svg{display:block;width:100%;height:100%;overflow:visible}
-.scroll-cat .cat-legs-front,.scroll-cat .cat-legs-back{transform-box:fill-box;transform-origin:50% 0;animation:cat-step .36s ease-in-out infinite alternate;animation-play-state:paused}
-.scroll-cat .cat-legs-back{animation-delay:-.36s}
-.scroll-cat.is-walking .cat-legs-front,.scroll-cat.is-walking .cat-legs-back{animation-play-state:running}
-@keyframes cat-step{from{transform:rotate(-13deg)}to{transform:rotate(13deg)}}
-@media(max-width:800px){.scroll-cat{width:74px;height:52px}}
-@media(prefers-reduced-motion:reduce){.scroll-cat{display:none}.cat-scroll-scene .cat-scroll-content{clip-path:none}}
+/* Scroll through torn paper into the green product collection. */
+.scratch-scene{background:#437d28;color:#fff;position:relative;isolation:isolate}
+.scratch-panel{position:relative;min-height:100svh;background:#437d28}
+.scratch-scene.has-scratch-reveal{padding-bottom:0}
+.has-scratch-reveal>.scratch-panel{position:sticky;top:0}
+.scratch-paper{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}
+.scratch-paper[hidden]{display:none}
+.scratch-paper svg{display:block;width:100%;height:100%;filter:drop-shadow(2px 4px 3px #13280f55)}
+.scratch-scene .collection h2,.scratch-scene .product-meta h3,.scratch-scene .eyebrow{color:#fff}
+.scratch-scene .section-heading>p,.scratch-scene .product>p,.scratch-scene .product-meta>span{color:#ffffffd9}
+.scratch-scene .filterbar,.scratch-scene .product-link{border-color:#ffffff50}
+.scratch-scene .filters button{color:#fff;border-color:#ffffff70}
+.scratch-scene .filters button:hover{background:#ffffff18}
+.scratch-scene .filters button.active{background:#fff;color:#23451a;border-color:#fff}
+.scratch-scene .product-link{color:#fff}
+.scratch-scene button:focus-visible{outline-color:#fff}
+@media(prefers-reduced-motion:reduce){.scratch-scene.has-scratch-reveal{padding-bottom:0}.has-scratch-reveal>.scratch-panel{position:relative}.scratch-paper{display:none}}
+
+@media(max-width:580px){.cat-scratches{right:0;top:-72px;width:55px;height:74px}}
