@@ -69,3 +69,7 @@
   .animated-nav.is-collapsed .animated-nav-brand,.animated-nav.is-collapsed .animated-nav-links{visibility:hidden}
   .animated-nav.is-collapsed .animated-nav-toggle{left:0;right:auto;transform:none}
 }
+
+/* Keep the store button's opaque backing inside its pill-shaped edge. */
+.visit .cat-glass{border-radius:999px;overflow:hidden;background:var(--paper);color:var(--deep)}
+.visit .cat-glass .glass-distortion{display:none}
