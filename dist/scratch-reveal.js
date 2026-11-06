@@ -97,7 +97,14 @@
     mask.setAttribute('width', width); mask.setAttribute('height', height);
     draw();
   }
-  function schedule() { if (!frame) frame = requestAnimationFrame(draw); }
+  function schedule() {
+    // Skipping via a product link applies only to that visit, not future scrolls.
+    if (bypass && scene.getBoundingClientRect().top >= innerHeight * .85) {
+      bypass = false;
+      layout();
+    }
+    if (!frame) frame = requestAnimationFrame(draw);
+  }
   // Links to products and keyboard focus skip the decorative transition.
   function showProducts(event) {
     if (event?.type === 'focusin' && -scene.getBoundingClientRect().top >= distance) return;
@@ -105,7 +112,9 @@
     layout();
   }
   section.addEventListener('focusin', showProducts);
-  document.querySelectorAll('a[href="#colecao"]').forEach(link => link.addEventListener('click', showProducts));
+  document.addEventListener('click', event => {
+    if (event.target instanceof Element && event.target.closest('a[href="#colecao"]')) showProducts();
+  });
   if (location.hash === '#colecao') showProducts();
   addEventListener('hashchange', () => {
     if (location.hash === '#colecao') {
@@ -189,6 +198,11 @@
       canvas.style.willChange = p > 0 && p < .94 ? 'transform' : 'auto';
     }
     function schedule() {
+      // Rearm even when the scene is outside the observer's visible range.
+      if (bypass && scrollY <= origin - h * .85) {
+        bypass = false;
+        layout(true);
+      }
       if (active && !bypass && !motion.matches && !raf) raf = requestAnimationFrame(update);
     }
     function layout(force = false) {
@@ -225,7 +239,9 @@
     }, {rootMargin:'100px 0px'});
     observer.observe(scene);
     section.addEventListener('focusin', skip);
-    document.querySelectorAll('a[href="#colecao"]').forEach(a => a.addEventListener('click', skip));
+    document.addEventListener('click', event => {
+      if (event.target instanceof Element && event.target.closest('a[href="#colecao"]')) skip();
+    });
     addEventListener('hashchange', () => {
       if (location.hash === '#colecao') { skip(); section.scrollIntoView({behavior:'instant'}); }
     });

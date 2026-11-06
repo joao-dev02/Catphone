@@ -78,9 +78,16 @@ export function AnimatedNavFramer() {
         className={cn("animated-nav", !isExpanded && "is-collapsed")}
         onKeyDown={event => { if (event.key === "Escape" && isExpanded) { event.preventDefault(); closeMenu(); } }}
       >
-        <div className="animated-nav-brand" aria-hidden="true">
+        <a
+          className="animated-nav-brand"
+          href="#inicio"
+          aria-label="Cat Phone — voltar ao início"
+          aria-hidden={!isExpanded}
+          tabIndex={isExpanded ? 0 : -1}
+          onClick={() => setActiveSection("")}
+        >
           <img src="assets/catphone-logo.png" alt="" width="28" height="28" />
-        </div>
+        </a>
         <div className="animated-nav-links" id={linksId} ref={linksRef} aria-hidden={!isExpanded} inert={!isExpanded}>
           {navItems.map(item => (
             <a

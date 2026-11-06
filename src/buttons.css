@@ -73,3 +73,7 @@
 /* Keep the store button's opaque backing inside its pill-shaped edge. */
 .visit .cat-glass{border-radius:999px;overflow:hidden;background:var(--paper);color:var(--deep)}
 .visit .cat-glass .glass-distortion{display:none}
+
+.header nav.animated-nav .animated-nav-brand{padding:0 7px 0 12px;pointer-events:auto;align-self:stretch;box-shadow:none}
+.header nav.animated-nav.is-collapsed .animated-nav-brand{pointer-events:none}
+@media(max-width:580px){.header nav.animated-nav .animated-nav-brand{padding-left:9px;padding-right:3px}}

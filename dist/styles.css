@@ -72,3 +72,14 @@ body{color:var(--deep)}h1,h2,.logo{color:var(--ink)}h1 em:after{background:var(-
 .coffee-photo .store-video{display:block;width:100%;height:100%;min-height:100%;object-fit:contain;object-position:center;background:#23451a}
 @media(min-width:581px){.coffee-photo{min-height:560px}.coffee-photo .store-video{position:absolute;inset:0}}
 @media(max-width:580px){.coffee-photo:has(.store-video){height:auto;aspect-ratio:9/16}.coffee-photo .store-video{position:absolute;inset:0}}
+
+/* The video sits inside a lightweight CSS iPhone frame. */
+.store-photo.about-phone-stage{display:flex;justify-content:center;align-items:center;height:auto;aspect-ratio:auto;padding:24px 18px;overflow:visible;border-radius:0}
+.iphone-frame{position:relative;width:min(100%,290px);aspect-ratio:9/19.5;padding:7px;border:2px solid #9b9a90;border-radius:44px;background:linear-gradient(125deg,#d2d0c6,#777970 35%,#c4c2b5 70%,#8c8f84);box-shadow:0 20px 38px #23451a26,0 3px 8px #16221130,inset 0 0 0 1px #eeeeea}
+.iphone-screen{position:relative;width:100%;height:100%;overflow:hidden;border-radius:35px;background:#080a08}
+.iphone-screen .about-video{display:block;width:100%;height:100%;object-fit:cover;object-position:center;background:#080a08}
+.iphone-screen::after{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:29%;height:22px;border-radius:20px;background:#050505;box-shadow:inset -9px 0 5px -7px #263641;pointer-events:none}
+.iphone-screen::before{content:'';position:absolute;left:35%;right:35%;bottom:7px;height:4px;border-radius:5px;background:#ffffffa6;z-index:1;pointer-events:none}
+.iphone-buttons{position:absolute;left:-5px;top:105px;width:3px;height:39px;border-radius:3px;background:#8b8e81;box-shadow:0 49px #8b8e81}
+.iphone-frame::after{content:'';position:absolute;right:-5px;top:133px;width:3px;height:60px;border-radius:3px;background:#8b8e81}
+@media(max-width:580px){.store-photo.about-phone-stage{padding:18px 12px}.iphone-frame{width:min(100%,270px);border-radius:41px}.iphone-screen{border-radius:32px}}
